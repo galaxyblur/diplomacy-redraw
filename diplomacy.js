@@ -46,7 +46,7 @@ setTimeout(function() {
         'Ankara': {
           supplyCenter: [],
           label: [],
-          army: [],
+          army: [-40, 0],
           fleet: []
         },
         'Apulia': {
@@ -390,9 +390,9 @@ setTimeout(function() {
         },
         'Smyrna': {
           supplyCenter: [],
-          label: [0, 30],
+          label: [0, 20],
           army: [],
-          fleet: []
+          fleet: [0, 40]
         },
         'Spain': {
           supplyCenter: [],
@@ -494,8 +494,10 @@ setTimeout(function() {
         }
       };
 
+  territoryData.Tunis = territoryData.Tunisia;
   jQuery.noConflict();
   $ = jQuery;
+  $('#diplomacy-phaser').remove();
   $areas = $('map area'),
 
   $areas.each(function() {
@@ -551,6 +553,31 @@ setTimeout(function() {
     areasObj[ter].width = areasObj[ter].max[0] - areasObj[ter].min[0];
     areasObj[ter].height = areasObj[ter].max[1] - areasObj[ter].min[1];
   });
+
+  var drawArrowForGraphics = function(graphics, fromX, fromY, toX, toY) {
+    //variables to be used when creating the arrow
+    var headlen = 7,
+        angle = Math.atan2(toY - fromY, toX - fromX);
+
+    //starting path of the arrow from the start square to the end square and drawing the stroke
+    graphics.moveTo(fromX, fromY);
+    graphics.lineTo(toX, toY);
+
+    //starting a new path from the head of the arrow to one of the sides of the point
+    graphics.moveTo(toX, toY);
+    graphics.lineTo(toX - headlen * Math.cos(angle - Math.PI / 7), toY - headlen * Math.sin(angle - Math.PI / 7));
+
+    //path from the side point of the arrow, to the other side point
+    graphics.lineTo(toX - headlen * Math.cos(angle + Math.PI / 7), toY - headlen * Math.sin(angle + Math.PI / 7));
+
+    //path from the side point back to the tip of the arrow, and then again to the opposite side point
+    graphics.lineTo(toX, toY);
+    graphics.lineTo(toX - headlen * Math.cos(angle - Math.PI / 7), toY - headlen * Math.sin(angle - Math.PI / 7));
+
+    //draws the paths created above
+    //ctx.fillStyle = "#cc0000";
+    //ctx.fill();
+  };
 
   var getCenterPointInSprite = function(sprite) {
     var point = [];
@@ -662,7 +689,7 @@ setTimeout(function() {
   var preload = function() {
     unitImages.Army  = game.load.image('army', 'assets/icon_army.png');
     unitImages.Fleet = game.load.image('fleet', 'assets/icon_fleet.png');
-    game.load.shader('bacteria', 'assets/bacteria.frag');
+    //game.load.shader('bacteria', 'assets/bacteria.frag');
   };
 
   var create = function() {
@@ -744,19 +771,67 @@ setTimeout(function() {
     $orders.each(function() {
       var $o = $(this),
           ord = $o.text(),
-          ter;
+          type = 'HOLD',
+          orderArr,
+          ter,
+          dest1,
+          dest2,
+          destSplit;
 
-      ord = ord.replace('HOLD', '%%%');
-      ord = ord.replace('MOVE', '%%%');
-      ord = ord.replace('SUPPORT', '%%%');
-      ord = ord.replace('CONVOY', '%%%');
+      if (ord.indexOf('HOLD') !== -1) {
+        ord = ord.replace('HOLD', '%%%');
+        type = 'HOLD';
+      } else if (ord.indexOf('MOVE') !== -1) {
+        ord = ord.replace('MOVE', '%%%');
+        type = 'MOVE';
+      } else if (ord.indexOf('SUPPORT') !== -1) {
+        ord = ord.replace('SUPPORT', '%%%');
+        type = 'SUPPORT';
+      } else if (ord.indexOf('CONVOY') !== -1) {
+        ord = ord.replace('CONVOY', '%%%');
+        type = 'CONVOY';
+      }
 
-      ter = $.trim(ord.split('%%%')[0]);
+      orderArr = ord.split('%%%');
+      ter = $.trim(orderArr[0]);
+      orderArr[1] = $.trim(orderArr[1].replace('(X)', ''));
+      destSplit = orderArr[1].split(' to ');
+      dest1 = destSplit[0];
+      dest2 = destSplit.length > 0 ? destSplit[1] : null;
 
-      //console.warn(ter);
+      if (territoryData[ter]) {
+        ter = territoryData[ter];
+      }
+
+      if (type === 'MOVE' && territoryData[dest1]) {
+        dest1 = territoryData[dest1];
+
+        var center = getCenterPointInSprite(ter.sprite),
+            destCenter = getCenterPointInSprite(dest1.sprite),
+            graphics = game.add.graphics(0, 0);
+
+        graphics.lineStyle(2, 0x000000, 0.6);
+        drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest1.sprite.x, destCenter[1] + dest1.sprite.y);
+      } else if (type === 'SUPPORT' && territoryData[dest1]) {
+        if (dest2 === 'hold') {
+          dest1 = territoryData[dest1];
+
+          var center = getCenterPointInSprite(ter.sprite),
+              destCenter = getCenterPointInSprite(dest1.sprite),
+              graphics = game.add.graphics(0, 0);
+
+          graphics.lineStyle(2, 0x00FF00, 0.6);
+          drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest1.sprite.x, destCenter[1] + dest1.sprite.y);
+        } else if (territoryData[dest2]) {
+        }
+      } else {
+        // HOLD
+        ter.sprite.tint = 0xCCCCCC;
+      }
+
     });
   };
 
-  game = new Phaser.Game(980, 770, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+  game = new Phaser.Game(980, 770, Phaser.AUTO, 'diplomacy-phaser', { preload: preload, create: create, update: update });
 
 }, 1000);
