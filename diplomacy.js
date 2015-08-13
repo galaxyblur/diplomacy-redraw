@@ -77,9 +77,9 @@ setTimeout(function() {
         },
         'Belgium': {
           supplyCenter: [],
-          label: [],
-          army: [],
-          fleet: []
+          label: [3, 0],
+          army: [-5, -15],
+          fleet: [-5, -15]
         },
         'Berlin': {
           supplyCenter: [],
@@ -210,8 +210,8 @@ setTimeout(function() {
         'Holland': {
           supplyCenter: [],
           label: [],
-          army: [],
-          fleet: []
+          army: [0, -15],
+          fleet: [0, -15]
         },
         'Ionian Sea': {
           isWater: true,
@@ -230,7 +230,7 @@ setTimeout(function() {
         'Kiel': {
           supplyCenter: [],
           label: [],
-          army: [],
+          army: [5, -20],
           fleet: []
         },
         'Liverpool': {
@@ -346,15 +346,15 @@ setTimeout(function() {
           fleet: []
         },
         'Rome': {
-          supplyCenter: [],
-          label: [],
-          army: [],
-          fleet: []
+          supplyCenter: [-10, -10],
+          label: [-10, -10],
+          army: [3, 8],
+          fleet: [3, 8]
         },
         'Ruhr': {
           supplyCenter: [],
           label: [],
-          army: [],
+          army: [0, 10],
           fleet: []
         },
         'Rumania': {
@@ -445,9 +445,9 @@ setTimeout(function() {
         'Tyrrhenian Sea': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [5, 5],
           army: [],
-          fleet: [0, 15]
+          fleet: [0, 20]
         },
         'Ukraine': {
           supplyCenter: [],
@@ -462,9 +462,9 @@ setTimeout(function() {
           fleet: []
         },
         'Vienna': {
-          supplyCenter: [],
-          label: [],
-          army: [],
+          supplyCenter: [-10, -10],
+          label: [-10, -10],
+          army: [-8, 10],
           fleet: []
         },
         'Wales': {
