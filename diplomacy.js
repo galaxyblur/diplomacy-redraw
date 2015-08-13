@@ -12,6 +12,7 @@ setTimeout(function() {
       areasObj = {},
       game,
       filter,
+      unitImages = {},
       terColors = {
         AUSTRIA : '#DA938F',
         ENGLAND : '#C57D39',
@@ -63,7 +64,7 @@ setTimeout(function() {
         'Baltic Sea': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [25, 10],
           army: [],
           fleet: []
         },
@@ -89,7 +90,7 @@ setTimeout(function() {
         'Black Sea': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [-10, 20],
           army: [],
           fleet: []
         },
@@ -107,32 +108,32 @@ setTimeout(function() {
         },
         'Budapest': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [0, -5],
+          army: [-20, 15],
           fleet: []
         },
         'Bulgaria': {
           supplyCenter: [-20, -20],
-          label: [-20, -20],
-          army: [],
+          label: [-10, -25],
+          army: [-13, 10],
           fleet: []
         },
         'Burgundy': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [13, 0],
+          army: [0, 10],
           fleet: []
         },
         'Clyde': {
           supplyCenter: [],
-          label: [],
+          label: [-10, 0],
           army: [],
           fleet: []
         },
         'Constantinople': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [5, 0],
+          army: [0, 20],
           fleet: []
         },
         'Denmark': {
@@ -146,42 +147,42 @@ setTimeout(function() {
           supplyCenter: [],
           label: [],
           army: [],
-          fleet: []
+          fleet: [0, 15]
         },
         'Edinburgh': {
           supplyCenter: [-12, 0],
-          label: [-12, 0],
+          label: [15, 0],
           army: [],
-          fleet: []
+          fleet: [5, 10]
         },
         'English Channel': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [8, 3],
           army: [],
-          fleet: []
+          fleet: [-10, 5]
         },
         'Finland': {
           supplyCenter: [],
-          label: [],
+          label: [10, 0],
           army: [],
           fleet: []
         },
         'Galicia': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [8, -13],
+          army: [18, 0],
           fleet: []
         },
         'Gascony': {
           supplyCenter: [],
           label: [],
-          army: [],
+          army: [-5, 15],
           fleet: []
         },
         'Greece': {
           supplyCenter: [],
-          label: [],
+          label: [-10, 0],
           army: [],
           fleet: []
         },
@@ -195,7 +196,7 @@ setTimeout(function() {
         'Gulf of Lyons': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [10, 0],
           army: [],
           fleet: []
         },
@@ -217,12 +218,12 @@ setTimeout(function() {
           supplyCenter: [],
           label: [],
           army: [],
-          fleet: []
+          fleet: [0, 10]
         },
         'Irish Sea': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [0, 15],
           army: [],
           fleet: []
         },
@@ -233,7 +234,7 @@ setTimeout(function() {
           fleet: []
         },
         'Liverpool': {
-          supplyCenter: [],
+          supplyCenter: [-5, 0],
           label: [],
           army: [],
           fleet: []
@@ -248,31 +249,31 @@ setTimeout(function() {
           supplyCenter: [],
           label: [],
           army: [],
-          fleet: []
+          fleet: [-5, 12]
         },
         'Marseilles': {
           supplyCenter: [],
           label: [],
           army: [],
-          fleet: []
+          fleet: [10, 20]
         },
         'Mid-Atlantic Ocean': {
           isWater: true,
           supplyCenter: [],
-          label: [],
+          label: [-20, -70],
           army: [],
           fleet: []
         },
         'Moscow': {
           supplyCenter: [],
           label: [],
-          army: [],
+          army: [-30, 20],
           fleet: []
         },
         'Munich': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [13, 0],
+          army: [0, 20],
           fleet: []
         },
         'Naples': {
@@ -303,7 +304,7 @@ setTimeout(function() {
         },
         'Norway': {
           supplyCenter: [-100, 80],
-          label: [-100, 80],
+          label: [-80, 70],
           army: [],
           fleet: []
         },
@@ -315,14 +316,14 @@ setTimeout(function() {
           fleet: []
         },
         'Paris': {
-          supplyCenter: [-10, -10],
-          label: [-10, -10],
-          army: [],
+          supplyCenter: [-10, -16],
+          label: [-10, -18],
+          army: [-7, 3],
           fleet: []
         },
         'Picardy': {
           supplyCenter: [],
-          label: [],
+          label: [0, 11],
           army: [],
           fleet: []
         },
@@ -358,14 +359,14 @@ setTimeout(function() {
         },
         'Rumania': {
           supplyCenter: [],
-          label: [],
+          label: [0, 20],
           army: [],
           fleet: []
         },
         'Serbia': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [5, 0],
+          army: [0, -25],
           fleet: []
         },
         'Sevastopol': {
@@ -376,7 +377,7 @@ setTimeout(function() {
         },
         'Silesia': {
           supplyCenter: [],
-          label: [],
+          label: [5, -3],
           army: [],
           fleet: []
         },
@@ -389,7 +390,7 @@ setTimeout(function() {
         },
         'Smyrna': {
           supplyCenter: [],
-          label: [],
+          label: [0, 30],
           army: [],
           fleet: []
         },
@@ -401,13 +402,13 @@ setTimeout(function() {
         },
         'St. Petersburg': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [0, -5],
+          army: [-30, 15],
           fleet: []
         },
         'Sweden': {
           supplyCenter: [-30, 70],
-          label: [-30, 70],
+          label: [-25, 60],
           army: [],
           fleet: []
         },
@@ -419,8 +420,8 @@ setTimeout(function() {
         },
         'Trieste': {
           supplyCenter: [],
-          label: [],
-          army: [],
+          label: [0, -5],
+          army: [-10, -22],
           fleet: []
         },
         'Tunisia': {
@@ -437,7 +438,7 @@ setTimeout(function() {
         },
         'Tyrolia': {
           supplyCenter: [],
-          label: [],
+          label: [0, 7],
           army: [],
           fleet: []
         },
@@ -446,7 +447,7 @@ setTimeout(function() {
           supplyCenter: [],
           label: [],
           army: [],
-          fleet: []
+          fleet: [0, 15]
         },
         'Ukraine': {
           supplyCenter: [],
@@ -468,14 +469,14 @@ setTimeout(function() {
         },
         'Wales': {
           supplyCenter: [],
-          label: [],
+          label: [8, 0],
           army: [],
           fleet: []
         },
         'Warsaw': {
-          supplyCenter: [],
-          label: [],
-          army: [],
+          supplyCenter: [0, -5],
+          label: [0, -7],
+          army: [0, 17],
           fleet: []
         },
         'Western Mediterranean': {
@@ -487,7 +488,7 @@ setTimeout(function() {
         },
         'Yorkshire': {
           supplyCenter: [],
-          label: [],
+          label: [15, 0],
           army: [],
           fleet: []
         }
@@ -626,36 +627,23 @@ setTimeout(function() {
 
   var handleFleetUnit = function(terName, sprite, color) {
     var point = getCenterPointInSprite(sprite),
-        newBmd,
         newSpr;
 
-    if (territoryData[terName].army && territoryData[terName].army.length > 0) {
-      point[0] = point[0] + territoryData[terName].army[0];
-      point[1] = point[1] + territoryData[terName].army[1];
+    if (territoryData[terName].army && territoryData[terName].fleet.length > 0) {
+      point[0] = point[0] + territoryData[terName].fleet[0];
+      point[1] = point[1] + territoryData[terName].fleet[1];
     }
 
-    newBmd = game.add.bitmapData(18, 18),
-    newSpr = game.add.sprite(point[0], point[1], newBmd);
+    newSpr = game.add.sprite(point[0], point[1], 'fleet');
     newSpr.anchor.set(0.5);
-
-    newBmd.ctx.beginPath();
-    newBmd.ctx.lineWidth = 2;
-    newBmd.ctx.strokeStyle = '#000000';
-    newBmd.ctx.fillStyle = color;
-    newBmd.ctx.moveTo(7, 0);
-    newBmd.ctx.lineTo(14, 14);
-    newBmd.ctx.lineTo(0, 14);
-    newBmd.ctx.lineTo(7, 0);
-    newBmd.ctx.closePath();
-    newBmd.ctx.stroke();
-    newBmd.ctx.fill();
+    newSpr.scale.setTo(0.8, 0.8);
 
     sprite.addChild(newSpr);
+    newSpr.tint = parseInt(color.replace('#', ''), 16);
   };
 
   var handleArmyUnit = function(terName, sprite, color) {
     var point = getCenterPointInSprite(sprite),
-        newBmd,
         newSpr;
 
     if (territoryData[terName].army && territoryData[terName].army.length > 0) {
@@ -663,23 +651,17 @@ setTimeout(function() {
       point[1] = point[1] + territoryData[terName].army[1];
     }
 
-    newBmd = game.add.bitmapData(20, 20),
-    newSpr = game.add.sprite(point[0], point[1], newBmd);
+    newSpr = game.add.sprite(point[0], point[1], 'army');
     newSpr.anchor.set(0.5);
-
-    newBmd.ctx.beginPath();
-    newBmd.ctx.lineWidth = 2;
-    newBmd.ctx.strokeStyle = '#000000';
-    newBmd.ctx.fillStyle = color;
-    newBmd.ctx.arc(10, 10, 5, 0, Math.PI*2, true);
-    newBmd.ctx.closePath();
-    newBmd.ctx.stroke();
-    newBmd.ctx.fill();
+    newSpr.scale.setTo(0.8, 0.8);
 
     sprite.addChild(newSpr);
+    newSpr.tint = parseInt(color.replace('#', ''), 16);
   };
 
   var preload = function() {
+    unitImages.Army  = game.load.image('army', 'assets/icon_army.png');
+    unitImages.Fleet = game.load.image('fleet', 'assets/icon_fleet.png');
     game.load.shader('bacteria', 'assets/bacteria.frag');
   };
 
