@@ -823,10 +823,18 @@ setTimeout(function() {
           graphics.lineStyle(2, 0x00FF00, 0.6);
           drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest1.sprite.x, destCenter[1] + dest1.sprite.y);
         } else if (territoryData[dest2]) {
+          dest2 = territoryData[dest2];
+
+          var center = getCenterPointInSprite(ter.sprite),
+              destCenter = getCenterPointInSprite(dest2.sprite),
+              graphics = game.add.graphics(0, 0);
+
+          graphics.lineStyle(2, 0x00FF00, 0.6);
+          drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest2.sprite.x, destCenter[1] + dest2.sprite.y);
         }
       } else {
         // HOLD
-        ter.sprite.tint = 0xCCCCCC;
+        ter.sprite.tint = 0xFF0000;
       }
 
     });
