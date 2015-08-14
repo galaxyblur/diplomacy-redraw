@@ -498,6 +498,7 @@ setTimeout(function() {
   jQuery.noConflict();
   $ = jQuery;
   $('#diplomacy-phaser').remove();
+  $('<div id="diplomacy-phaser" />').appendTo('body');
   $areas = $('map area'),
 
   $areas.each(function() {
@@ -573,10 +574,6 @@ setTimeout(function() {
     //path from the side point back to the tip of the arrow, and then again to the opposite side point
     graphics.lineTo(toX, toY);
     graphics.lineTo(toX - headlen * Math.cos(angle - Math.PI / 7), toY - headlen * Math.sin(angle - Math.PI / 7));
-
-    //draws the paths created above
-    //ctx.fillStyle = "#cc0000";
-    //ctx.fill();
   };
 
   var getCenterPointInSprite = function(sprite) {
@@ -653,42 +650,207 @@ setTimeout(function() {
   };
 
   var handleFleetUnit = function(terName, sprite, color) {
+    var draw = function(ctx) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.lineTo(56.25,0);
+      ctx.lineTo(56.25,22.5);
+      ctx.lineTo(0,22.5);
+      ctx.closePath();
+      ctx.clip();
+      ctx.translate(0,0);
+      ctx.translate(0,0);
+      ctx.scale(1.25,1.25);
+      ctx.translate(0,0);
+      ctx.strokeStyle = 'rgba(0,0,0,0)';
+      ctx.lineCap = 'butt';
+      ctx.lineJoin = 'miter';
+      ctx.miterLimit = 4;
+      ctx.save();
+      ctx.restore();
+      ctx.save();
+      ctx.strokeStyle = "rgba(0, 0, 0, 0)";
+      ctx.fillStyle = color;
+      ctx.translate(0,18);
+      ctx.scale(0.1,-0.1);
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(212,160);
+      ctx.bezierCurveTo(205,149,193,140,184,140);
+      ctx.bezierCurveTo(165,140,130,103,130,83);
+      ctx.bezierCurveTo(130,75,117,70,93,70);
+      ctx.bezierCurveTo(65,70,59,67,70,60);
+      ctx.bezierCurveTo(81,53,73,50,42,50);
+      ctx.bezierCurveTo(3,50,-1,48,2,28);
+      ctx.bezierCurveTo(5,5,6,5,211,2);
+      ctx.lineTo(417,0);
+      ctx.lineTo(430,27);
+      ctx.bezierCurveTo(438,43,446,58,448,62);
+      ctx.bezierCurveTo(450,65,425,68,393,67);
+      ctx.bezierCurveTo(326,66,290,76,290,95);
+      ctx.bezierCurveTo(290,102,281,110,270,113);
+      ctx.bezierCurveTo(255,117,250,127,250,149);
+      ctx.bezierCurveTo(250,185,231,190,212,160);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#000000';
+      ctx.moveTo(256,103);
+      ctx.bezierCurveTo(264,100,270,92,270,84);
+      ctx.bezierCurveTo(270,76,277,70,285,70);
+      ctx.bezierCurveTo(293,70,300,62,300,53);
+      ctx.bezierCurveTo(300,38,302,37,310,50);
+      ctx.bezierCurveTo(318,63,321,63,329,51);
+      ctx.bezierCurveTo(337,38,355,39,413,56);
+      ctx.bezierCurveTo(428,61,429,58,418,36);
+      ctx.lineTo(407,10);
+      ctx.lineTo(212,12);
+      ctx.bezierCurveTo(67,14,16,18,12,28);
+      ctx.bezierCurveTo(10,36,21,40,48,40);
+      ctx.bezierCurveTo(71,40,91,46,94,53);
+      ctx.bezierCurveTo(99,62,101,62,106,53);
+      ctx.bezierCurveTo(113,36,134,56,145,90);
+      ctx.bezierCurveTo(153,114,153,114,161,95);
+      ctx.bezierCurveTo(168,78,169,79,169,103);
+      ctx.bezierCurveTo(170,138,183,138,197,103);
+      ctx.lineTo(208,75);
+      ctx.lineTo(209,103);
+      ctx.bezierCurveTo(210,118,216,139,223,151);
+      ctx.bezierCurveTo(234,170,235,169,238,140);
+      ctx.bezierCurveTo(240,123,248,106,256,103);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.restore();
+      ctx.restore();
+    };
+
     var point = getCenterPointInSprite(sprite),
-        newSpr;
+        newSpr,
+        bmd;
 
     if (territoryData[terName].army && territoryData[terName].fleet.length > 0) {
       point[0] = point[0] + territoryData[terName].fleet[0];
       point[1] = point[1] + territoryData[terName].fleet[1];
     }
 
-    newSpr = game.add.sprite(point[0], point[1], 'fleet');
+    bmd = game.add.bitmapData(55, 23);
+    newSpr = game.add.sprite(point[0], point[1], bmd);
     newSpr.anchor.set(0.5);
     newSpr.scale.setTo(0.8, 0.8);
 
+    draw(bmd.ctx);
+
     sprite.addChild(newSpr);
-    newSpr.tint = parseInt(color.replace('#', ''), 16);
+    newSpr.tint = 0xCCCCCC;
   };
 
   var handleArmyUnit = function(terName, sprite, color) {
+    var draw = function(ctx) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.lineTo(50,0);
+      ctx.lineTo(50,22.5);
+      ctx.lineTo(0,22.5);
+      ctx.closePath();
+      ctx.clip();
+      ctx.translate(0,0);
+      ctx.translate(0,0);
+      ctx.scale(1.25,1.25);
+      ctx.translate(0,0);
+      ctx.strokeStyle = 'rgba(0,0,0,0)';
+      ctx.lineCap = 'butt';
+      ctx.lineJoin = 'miter';
+      ctx.miterLimit = 4;
+      ctx.save();
+      ctx.restore();
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.strokeStyle = "rgba(0, 0, 0, 0)";
+      ctx.translate(0,18);
+      ctx.scale(0.1,-0.1);
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(170,165);
+      ctx.bezierCurveTo(140,158,89,151,58,151);
+      ctx.bezierCurveTo(-24,150,-15,130,68,130);
+      ctx.lineTo(135,129);
+      ctx.lineTo(80,106);
+      ctx.bezierCurveTo(18,79,8,59,41,24);
+      ctx.bezierCurveTo(63,1,68,0,211,0);
+      ctx.bezierCurveTo(358,0,359,0,379,26);
+      ctx.bezierCurveTo(421,79,397,120,327,115);
+      ctx.bezierCurveTo(301,114,280,116,280,121);
+      ctx.bezierCurveTo(280,126,289,130,299,130);
+      ctx.bezierCurveTo(322,130,336,148,323,161);
+      ctx.bezierCurveTo(308,176,227,179,170,165);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = "#000000";
+      ctx.moveTo(315,149);
+      ctx.bezierCurveTo(320,144,316,140,303,140);
+      ctx.bezierCurveTo(292,140,270,134,255,126);
+      ctx.lineTo(228,112);
+      ctx.lineTo(271,106);
+      ctx.bezierCurveTo(295,103,328,99,344,98);
+      ctx.bezierCurveTo(360,96,378,87,384,78);
+      ctx.bezierCurveTo(393,64,389,55,367,33);
+      ctx.bezierCurveTo(349,15,341,11,346,23);
+      ctx.bezierCurveTo(351,36,347,40,331,40);
+      ctx.bezierCurveTo(308,40,302,25,323,17);
+      ctx.bezierCurveTo(329,14,323,11,308,11);
+      ctx.bezierCurveTo(288,10,282,14,286,25);
+      ctx.bezierCurveTo(290,36,286,40,270,40);
+      ctx.bezierCurveTo(254,40,250,36,254,25);
+      ctx.bezierCurveTo(258,15,253,10,240,10);
+      ctx.bezierCurveTo(227,10,222,15,226,25);
+      ctx.bezierCurveTo(230,36,226,40,210,40);
+      ctx.bezierCurveTo(194,40,190,36,194,25);
+      ctx.bezierCurveTo(198,15,193,10,180,10);
+      ctx.bezierCurveTo(167,10,162,15,166,25);
+      ctx.bezierCurveTo(170,36,166,40,150,40);
+      ctx.bezierCurveTo(134,40,130,36,134,25);
+      ctx.bezierCurveTo(138,15,133,10,120,10);
+      ctx.bezierCurveTo(107,10,102,15,106,25);
+      ctx.bezierCurveTo(110,36,106,40,90,40);
+      ctx.bezierCurveTo(73,40,69,36,74,23);
+      ctx.bezierCurveTo(79,10,74,12,56,29);
+      ctx.bezierCurveTo(41,43,30,57,30,61);
+      ctx.bezierCurveTo(30,74,120,110,154,111);
+      ctx.bezierCurveTo(182,111,183,112,163,120);
+      ctx.bezierCurveTo(128,134,136,146,188,157);
+      ctx.bezierCurveTo(238,168,299,165,315,149);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.restore();
+      ctx.restore();
+    };
+
     var point = getCenterPointInSprite(sprite),
-        newSpr;
+        newSpr,
+        bmd;
 
     if (territoryData[terName].army && territoryData[terName].army.length > 0) {
       point[0] = point[0] + territoryData[terName].army[0];
       point[1] = point[1] + territoryData[terName].army[1];
     }
 
-    newSpr = game.add.sprite(point[0], point[1], 'army');
+    bmd = game.add.bitmapData(50, 23);
+    newSpr = game.add.sprite(point[0], point[1], bmd);
     newSpr.anchor.set(0.5);
     newSpr.scale.setTo(0.8, 0.8);
 
+    draw(bmd.ctx);
+
     sprite.addChild(newSpr);
-    newSpr.tint = parseInt(color.replace('#', ''), 16);
+    newSpr.tint = 0xCCCCCC;
   };
 
   var preload = function() {
-    unitImages.Army  = game.load.image('army', 'assets/icon_army.png');
-    unitImages.Fleet = game.load.image('fleet', 'assets/icon_fleet.png');
     //game.load.shader('bacteria', 'assets/bacteria.frag');
   };
 
@@ -814,6 +976,7 @@ setTimeout(function() {
         drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest1.sprite.x, destCenter[1] + dest1.sprite.y);
       } else if (type === 'SUPPORT' && territoryData[dest1]) {
         if (dest2 === 'hold') {
+          // SUPPORT HOLD
           dest1 = territoryData[dest1];
 
           var center = getCenterPointInSprite(ter.sprite),
@@ -823,6 +986,7 @@ setTimeout(function() {
           graphics.lineStyle(2, 0x00FF00, 0.6);
           drawArrowForGraphics(graphics, center[0] + ter.sprite.x, center[1] + ter.sprite.y, destCenter[0] + dest1.sprite.x, destCenter[1] + dest1.sprite.y);
         } else if (territoryData[dest2]) {
+          // SUPPORT MOVE
           dest2 = territoryData[dest2];
 
           var center = getCenterPointInSprite(ter.sprite),
@@ -836,7 +1000,6 @@ setTimeout(function() {
         // HOLD
         ter.sprite.tint = 0xFF0000;
       }
-
     });
   };
 
